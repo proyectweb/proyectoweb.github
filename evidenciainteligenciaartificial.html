@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparación de Fotos - Original vs IA</title>
+    <style>
+        /* Estilos CSS con muchos colores */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            animation: bgChange 15s infinite alternate;
+        }
+
+        @keyframes bgChange {
+            0% { background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%); }
+            25% { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 50%, #a1c4fd 100%); }
+            50% { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 50%, #84fab0 100%); }
+            75% { background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 50%, #ffc3a0 100%); }
+            100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%); }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px 30px;
+            border-radius: 50px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .comparison-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .photo-box {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .photo-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .original .photo-title {
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .ai .photo-title {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-box:hover .photo-frame img {
+            transform: scale(1.05);
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #changePhoto {
+            background: linear-gradient(45deg, #3a7bd5 0%, #00d2ff 100%);
+            color: white;
+        }
+
+        #toggleEffect {
+            background: linear-gradient(45deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .effect-active {
+            filter: sepia(80%) hue-rotate(180deg) contrast(120%);
+            transition: filter 1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .photo-box {
+                width: 90%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        .button-container {
+  position: absolute;
+  top: 10px;  /* Ajusta el espacio desde arriba */
+  left: 10px; /* Ajusta el espacio desde la izquierda */
+}
+
+.siguientes-btn {
+  /* Aquí puedes agregar estilos al botón si quieres */
+  padding: 40px 50px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+    </style>
+</head>
+<!-- Botón en esquina superior izquierda -->
+<div class="button-container">
+  <a href="evidenciadigital.html" class="siguientes-btn">atras</a> 
+</div>
+<body>
+    <h1>Desmostrando cosas importante la foto original es de la victima</h1>
+    <h2>
+        La imagen generada por inteligencia artificial corresponde al delincuente que fue identificado a nivel internacional.
+    </h2>
+   
+  <a href="https://maps.app.goo.gl/arxWa4rpT8NVRCqW9" target="_blank">
+Fue ubicado en Nueva York ver la ubicacion en el google maps
+</a>
+
+    <div class="comparison-container">
+        <div class="photo-box original">
+            <h2 class="photo-title">Foto Original</h2>
+            <div class="photo-frame">
+               <img src="fotooriginal.jpg" alt="Texto alternativo">
+            </div>
+            <p class="description">Esta es la fotografía original sin ningún procesamiento.</p>
+        </div>
+        
+        <div class="photo-box ai">
+            <h2 class="photo-title">Foto con IA</h2>
+            <div class="photo-frame">
+          <img src="inteligenciaartificialfoto.png" alt="Texto alternativo">
+            </div>
+            <p class="description">Esta fotografía ha sido mejorada con inteligencia artificial.</p>
+        </div>
+    </div>
+    
+   <div class="comparison-container">
+        <div class="photo-box original">
+            <h2 class="photo-title">Foto Original</h2>
+            <div class="photo-frame">
+               <img src="fotooriginal.jpg" alt="Texto alternativo">
+            </div>
+            <p class="description">Esta es la fotografía original sin ningún procesamiento.</p>
+        </div>
+        
+        <div class="photo-box ai">
+            <h2 class="photo-title">Foto con IA</h2>
+            <div class="photo-frame">
+          <img src="fotoia.png" alt="Texto alternativo">
+            </div>
+            <p class="description">Esta fotografía ha sido mejorada con inteligencia artificial.</p>
+        </div>
+    </div>
+    <script>
+      
+        
+        let currentPhotoIndex = 0;
+        const originalPhoto = document.getElementById('originalPhoto');
+        const aiPhoto = document.getElementById('aiPhoto');
+        const changePhotoBtn = document.getElementById('changePhoto');
+        const toggleEffectBtn = document.getElementById('toggleEffect');
+        
+        // Función para cambiar las fotos
+        function changePhotos() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photoPairs.length;
+            originalPhoto.src = photoPairs[currentPhotoIndex].original;
+            aiPhoto.src = photoPairs[currentPhotoIndex].ai;
+            
+            // Añadir animación
+            originalPhoto.style.opacity = '0';
+            aiPhoto.style.opacity = '0';
+            
+            setTimeout(() => {
+                originalPhoto.style.opacity = '1';
+                aiPhoto.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Función para alternar efecto IA
+        function toggleEffect() {
+            aiPhoto.classList.toggle('effect-active');
+            
+            if (aiPhoto.classList.contains('effect-active')) {
+                toggleEffectBtn.textContent = 'Quitar Efecto IA';
+            } else {
+                toggleEffectBtn.textContent = 'Aplicar Efecto IA';
+            }
+        }
+        
+        // Event listeners
+        changePhotoBtn.addEventListener('click', changePhotos);
+        toggleEffectBtn.addEventListener('click', toggleEffect);
+        
+        // Cambiar fotos cada 10 segundos (opcional)
+        setInterval(changePhotos, 10000);
+        
+        // Inicializar con la primera foto
+        changePhotos();
+    </script>
+</body>
+</html>
